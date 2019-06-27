@@ -1,0 +1,61 @@
+/*URL AMIGÁVEL SIMPLES*/
+
+CRIAR ARQUIVO .htaccess COM OS SEGUINTES DADOS
+
+RewriteEngine On
+RewriteRule ^inicio/?$ /pasta/arquivo.php [NC,L]
+
+/*2 MÉTOFO URL AMIGÁVEL AVANÇADO*/
+  RewriteEngine On
+	
+	RewriteCond %{SCRIPT_FILENAME} !-f //file
+	
+	RewriteCond %{SCRIPT_FILENAME} !-d	//directory
+	
+	RewriteRule ^(.*)$ index.php?page=$1
+  
+/*NO ARQUIVO index.php*/
+
+<?php
+$page = $_GET['page'];
+
+if(file_exists("paginas/$page.php")){
+	include ("paginas/$page.php");
+
+}else{
+	include ("paginas/erro404.php");
+}
+?>
+
+
+
+/*3º Metodo htaccess*/
+
+	RewriteEngine On
+	
+	RewriteCond %{SCRIPT_FILENAME} !-f
+	
+	RewriteCond %{SCRIPT_FILENAME} !-d
+	
+	RewriteRule ^(.*)$ index.php?url=$1
+  
+  /*3º Metodo index.php*/
+  
+  <?php
+	$url = (isset($_GET['url'])) ? $_GET['url']:'home.php';
+	$url = array_filter(explode('/',$url));
+			var_dump($url);
+
+	$pags = 'visual/';
+	$ext = '.php';
+
+if(file_exists($pags.$url['0'].$ext)){
+	include($pags.$url['0'].$ext);
+	
+}	else	{
+	
+	echo"Página não encontrada!";
+}
+?>
+
+  
