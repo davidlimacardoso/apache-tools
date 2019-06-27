@@ -58,4 +58,21 @@ if(file_exists($pags.$url['0'].$ext)){
 }
 ?>
 
+  /*4º Metodo index.php mais provável*/
+
+<?php 
+		$url = (isset($_GET['url'])) ? $_GET['url']:'home';
+			$url = array_filter(explode('/',$url));
+			
+			$file = 'pags/'.$url[0].'.php';
+
+		if(is_file($file)){
+				include $file;
+			}else{
+				include 'pags/erro404.php';
+			}			
+
+		
+		?>
+
   
