@@ -58,7 +58,21 @@ if(file_exists($pags.$url['0'].$ext)){
 }
 ?>
 
-  /*4º Metodo index.php mais provável*/
+  /*4º Metodo amigável index.php */
+  
+  /*	.httpaccess com método L,QSA
+  A URI: /site/index.php?pagina=1 vai ser reescrita para /site/index.php?site=5&pagina=1
+  Utilizei com as variáveis para o GET da url e funcionou tranquilo com as paginações  */
+  
+  .httpaccess >>
+  
+  	RewriteEngine On
+	
+	RewriteCond %{SCRIPT_FILENAME} !-f
+	
+	RewriteCond %{SCRIPT_FILENAME} !-d
+	
+	RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
 
 <?php 
 		$url = (isset($_GET['url'])) ? $_GET['url']:'home';
@@ -73,6 +87,6 @@ if(file_exists($pags.$url['0'].$ext)){
 			}			
 
 		
-		?>
+?>
 
   
